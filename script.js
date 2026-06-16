@@ -1,55 +1,176 @@
-// 1. Função para verificar a senha de entrada
+// --- 1. GERADOR DE ELEMENTOS NO FUNDO (CRUZES E CORAÇÕES) ---
+function criarElementoFundo() {
+    const fundo = document.getElementById('fundo-animado');
+    if (!fundo) return;
+
+    const elemento = document.createElement('div');
+    elemento.classList.add('elemento-subindo');
+
+    // Alterna de forma aleatória entre uma Cruz Preta Simples e um Coração Vermelho
+    if (Math.random() > 0.5) {
+        elemento.innerHTML = '✝️'; // Cruz preta simples por emoji (renderiza preta na maioria dos sistemas)
+        elemento.style.filter = "brightness(0)"; // Garante que fique totalmente pretinha
+        elemento.style.fontSize = '22px';
+    } else {
+        elemento.innerHTML = '❤️';
+        elemento.style.fontSize = Math.random() * 15 + 15 + 'px';
+    }
+
+    elemento.style.left = Math.random() * 95 + 'vw';
+    const duracao = Math.random() * 4 + 4; // Entre 4 e 8 segundos
+    elemento.style.animationDuration = duracao + 's';
+
+    fundo.appendChild(elemento);
+
+    setTimeout(() => {
+        elemento.remove();
+    }, duracao * 1000);
+}
+setInterval(criarElementoFundo, 400);
+
+
+// --- 2. VERIFICAÇÃO DE SENHA MODIFICADA ---
 function verificarSenha() {
     const senhaInserida = document.getElementById('senha').value;
-    const mensagemErro = document.getElementById('erro-mensagem');
+    const msgErro = document.getElementById('erro-mensagem');
 
     if (senhaInserida === "AmorzinhoRq") {
-        mensagemErro.style.color = "#00ff00";
-        mensagemErro.innerText = "Acesso liberado... Carregando o jogo...";
-        
-        // Aqui, depois vamos disparar a função que esconde essa tela e abre o jogo da bolinha
-        setTimeout(() => {
-            alert("A senha deu certo! Pronto para a fase do jogo?");
-            // Proximo passo: sumir com a 'tela-login' e iniciar o game.
-        }, 1000);
-
+        // Esconde a tela de login e exibe a tela do jogo!
+        document.getElementById('tela-login').classList.add('escondido');
+        document.getElementById('tela-jogo').classList.remove('escondido');
+        inicializarJogo();
     } else {
-        mensagemErro.style.color = "#ff4d4d";
-        mensagemErro.innerText = "Senha incorreta, tente de novo, vida.";
+        msgErro.innerHTML = "Digite 'AmorzinhoRq' ai vai dar certo amor 🥰❤️";
     }
 }
 
-// 2. Função para criar corações subindo na tela aleatoriamente
-function criarCoracao() {
-    const container = document.getElementById('fundo-coracoes');
-    if (!container) return;
 
-    const coracao = document.createElement('div');
-    coracao.classList.add('coracao-subindo');
-    coracao.innerHTML = '❤️'; // Ícone do coração
+// --- 3. SISTEMA DO JOGO DA BOLINHA NEON ---
+let coracoesColetados = 0;
+let errosCometidos = 0;
+let jogoAtivo = false;
+let loopJogo;
 
-    // Posição horizontal aleatória (0 a 100% da largura da tela)
-    coracao.style.left = Math.random() * 100 + 'vw';
-    
-    // Tamanhos aleatórios para dar profundidade
-    const tamanho = Math.random() * 15 + 15; // Entre 15px e 30px
-    coracao.style.fontSize = tamanho + 'px';
+const campo = document.getElementById('campo-jogo');
+const bolinha = document.getElementById('bolinha-neon');
 
-    // Tempo de subida aleatório (entre 3 e 6 segundos)
-    const duracao = Math.random() * 3 + 3;
-    coracao.style.animationDuration = duracao + 's';
+function inicializarJogo() {
+    coracoesColetados = 0;
+    errosCometidos = 0;
+    atualizarPlacar();
+    jogoAtivo = true;
 
-    // Força um desvio para os lados aleatório usando a variável CSS que criamos
-    const desvioHorizontal = (Math.random() * 200 - 100) + 'px';
-    coracao.style.setProperty('--random-x', desvioHorizontal);
+    // Controles para Celular (Touch) e PC (Mouse)
+    campo.addEventListener('mousemove', moverBolinhaMouse);
+    campo.addEventListener('touchmove', moverBolinhaTouch, { passive: false });
 
-    container.appendChild(coracao);
-
-    // Remove o coração do código depois que a animação terminar para não travar o PC/Celular
-    setTimeout(() => {
-        coracao.remove();
-    }, duracao * 1000);
+    // Começa a derrubar itens do topo do campo
+    loopJogo = setInterval(criarItemQueda, 800);
 }
 
-// Executa a função de criar corações a cada 300 milissegundos
-setInterval(criarCoracao, 300);
+function atualizarPlacar() {
+    document.getElementById('pts-coracoes').innerText = coracoesColetados;
+    document.getElementById('pts-erros').innerText = errosCometidos;
+}
+
+function moverBolinhaMouse(e) {
+    if (!jogoAtivo) return;
+    const rect = campo.getBoundingClientRect();
+    let x = e.clientX - rect.left - 12.5; // Centraliza na bolinha (25px de largura)
+    definirPosicaoBolinha(x, rect.width);
+}
+
+function moverBolinhaTouch(e) {
+    if (!jogoAtivo) return;
+    e.preventDefault(); // Evita a página de arrastar no celular
+    const rect = campo.getBoundingClientRect();
+    let x = e.touches[0].clientX - rect.left - 12.5;
+    definirPosicaoBolinha(x, rect.width);
+}
+
+function definirPosicaoBolinha(x, larguraMax) {
+    if (x < 0) x = 0;
+    if (x > larguraMax - 25) x = larguraMax - 25;
+    bolinha.style.left = x + 'px';
+}
+
+function criarItemQueda() {
+    if (!jogoAtivo) return;
+
+    const item = document.createElement('div');
+    item.classList.add('item-jogo');
+    
+    // Define se cai um coração (bom) ou uma flecha (ruim)
+    const ehCoracao = Math.random() > 0.4;
+    item.innerHTML = ehCoracao ? '❤️' : '🏹';
+    item.dataset.tipo = ehCoracao ? 'bom' : 'ruim';
+
+    const larguraCampo = campo.clientWidth;
+    item.style.left = Math.random() * (larguraCampo - 25) + 'px';
+    item.style.top = '0px';
+    campo.appendChild(item);
+
+    // Motor de queda do item
+    let posicaoY = 0;
+    let queda = setInterval(() => {
+        if (!jogoAtivo) {
+            clearInterval(queda);
+            item.remove();
+            return;
+        }
+
+        posicaoY += 4; // Velocidade de descida
+        item.style.top = posicaoY + 'px';
+
+        // Checar Colisão com a Bolinha Neon
+        const bRect = bolinha.getBoundingClientRect();
+        const iRect = item.getBoundingClientRect();
+
+        const colidiu = !(bRect.right < iRect.left || 
+                          bRect.left > iRect.right || 
+                          bRect.bottom < iRect.top || 
+                          bRect.top > iRect.bottom);
+
+        if (colidiu) {
+            clearInterval(queda);
+            item.remove();
+            
+            if (item.dataset.tipo === 'bom') {
+                coracoesColetados++;
+                atualizarPlacar();
+                if (coracoesColetados >= 7) {
+                    ganharJogo();
+                }
+            } else {
+                errosCometidos++;
+                atualizarPlacar();
+                if (errosCometidos >= 3) {
+                    perderJogo();
+                }
+            }
+        }
+
+        // Se passar do fundo do campo sem colidir
+        if (posicaoY > campo.clientHeight) {
+            clearInterval(queda);
+            item.remove();
+        }
+    }, 20);
+}
+
+function perderJogo() {
+    jogoAtivo = false;
+    clearInterval(loopJogo);
+    alert("Tente mais uma vez vida, você consegue! ❤️🏹");
+    // Limpa os itens antigos que ficaram voando
+    document.querySelectorAll('.item-jogo').forEach(el => el.remove());
+    inicializarJogo(); // Reseta e recomeça
+}
+
+function ganarJogo() {
+    jogoAtivo = false;
+    clearInterval(loopJogo);
+    // Esconde o jogo e mostra a linda carta final com a foto moldurada
+    document.getElementById('tela-jogo').classList.add('escondido');
+    document.getElementById('tela-final').classList.remove('escondido');
+}

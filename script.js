@@ -6,10 +6,9 @@ function criarElementoFundo() {
     const elemento = document.createElement('div');
     elemento.classList.add('elemento-subindo');
 
-    // Alterna de forma aleatória entre uma Cruz Preta Simples e um Coração Vermelho
     if (Math.random() > 0.5) {
-        elemento.innerHTML = '✝️'; // Cruz preta simples por emoji (renderiza preta na maioria dos sistemas)
-        elemento.style.filter = "brightness(0)"; // Garante que fique totalmente pretinha
+        elemento.innerHTML = '✝️'; 
+        elemento.style.filter = "brightness(0)"; 
         elemento.style.fontSize = '22px';
     } else {
         elemento.innerHTML = '❤️';
@@ -17,7 +16,7 @@ function criarElementoFundo() {
     }
 
     elemento.style.left = Math.random() * 95 + 'vw';
-    const duracao = Math.random() * 4 + 4; // Entre 4 e 8 segundos
+    const duracao = Math.random() * 4 + 4; 
     elemento.style.animationDuration = duracao + 's';
 
     fundo.appendChild(elemento);
@@ -29,13 +28,12 @@ function criarElementoFundo() {
 setInterval(criarElementoFundo, 400);
 
 
-// --- 2. VERIFICAÇÃO DE SENHA MODIFICADA ---
+// --- 2. VERIFICAÇÃO DE SENHA ---
 function verificarSenha() {
     const senhaInserida = document.getElementById('senha').value;
     const msgErro = document.getElementById('erro-mensagem');
 
     if (senhaInserida === "AmorzinhoRq") {
-        // Esconde a tela de login e exibe a tela do jogo!
         document.getElementById('tela-login').classList.add('escondido');
         document.getElementById('tela-jogo').classList.remove('escondido');
         inicializarJogo();
@@ -45,7 +43,7 @@ function verificarSenha() {
 }
 
 
-// --- 3. SISTEMA DO JOGO DA BOLINHA NEON ---
+// --- 3. SISTEMA DO JOGO DA BOLINHA NEON (CORRIGIDO) ---
 let coracoesColetados = 0;
 let errosCometidos = 0;
 let jogoAtivo = false;
@@ -60,12 +58,10 @@ function inicializarJogo() {
     atualizarPlacar();
     jogoAtivo = true;
 
-    // Controles para Celular (Touch) e PC (Mouse)
     campo.addEventListener('mousemove', moverBolinhaMouse);
     campo.addEventListener('touchmove', moverBolinhaTouch, { passive: false });
 
-    // Começa a derrubar itens do topo do campo
-    loopJogo = setInterval(criarItemQueda, 800);
+    loopJogo = setInterval(criarItemQueda, 750); // Itens descem um pouquinho mais rápido
 }
 
 function atualizarPlacar() {
@@ -76,13 +72,13 @@ function atualizarPlacar() {
 function moverBolinhaMouse(e) {
     if (!jogoAtivo) return;
     const rect = campo.getBoundingClientRect();
-    let x = e.clientX - rect.left - 12.5; // Centraliza na bolinha (25px de largura)
+    let x = e.clientX - rect.left - 12.5; 
     definirPosicaoBolinha(x, rect.width);
 }
 
 function moverBolinhaTouch(e) {
     if (!jogoAtivo) return;
-    e.preventDefault(); // Evita a página de arrastar no celular
+    e.preventDefault(); 
     const rect = campo.getBoundingClientRect();
     let x = e.touches[0].clientX - rect.left - 12.5;
     definirPosicaoBolinha(x, rect.width);
@@ -100,7 +96,6 @@ function criarItemQueda() {
     const item = document.createElement('div');
     item.classList.add('item-jogo');
     
-    // Define se cai um coração (bom) ou uma flecha (ruim)
     const ehCoracao = Math.random() > 0.4;
     item.innerHTML = ehCoracao ? '❤️' : '🏹';
     item.dataset.tipo = ehCoracao ? 'bom' : 'ruim';
@@ -110,7 +105,6 @@ function criarItemQueda() {
     item.style.top = '0px';
     campo.appendChild(item);
 
-    // Motor de queda do item
     let posicaoY = 0;
     let queda = setInterval(() => {
         if (!jogoAtivo) {
@@ -119,10 +113,9 @@ function criarItemQueda() {
             return;
         }
 
-        posicaoY += 4; // Velocidade de descida
+        posicaoY += 4; 
         item.style.top = posicaoY + 'px';
 
-        // Checar Colisão com a Bolinha Neon
         const bRect = bolinha.getBoundingClientRect();
         const iRect = item.getBoundingClientRect();
 
@@ -139,7 +132,7 @@ function criarItemQueda() {
                 coracoesColetados++;
                 atualizarPlacar();
                 if (coracoesColetados >= 7) {
-                    ganharJogo();
+                    ganharJogo(); // AQUI: Chamando a função com o nome certinho!
                 }
             } else {
                 errosCometidos++;
@@ -150,7 +143,6 @@ function criarItemQueda() {
             }
         }
 
-        // Se passar do fundo do campo sem colidir
         if (posicaoY > campo.clientHeight) {
             clearInterval(queda);
             item.remove();
@@ -162,15 +154,35 @@ function perderJogo() {
     jogoAtivo = false;
     clearInterval(loopJogo);
     alert("Tente mais uma vez vida, você consegue! ❤️🏹");
-    // Limpa os itens antigos que ficaram voando
     document.querySelectorAll('.item-jogo').forEach(el => el.remove());
-    inicializarJogo(); // Reseta e recomeça
+    inicializarJogo(); 
 }
 
-function ganarJogo() {
+function ganharJogo() {
     jogoAtivo = false;
     clearInterval(loopJogo);
-    // Esconde o jogo e mostra a linda carta final com a foto moldurada
+    // Limpa o campo de jogo
+    document.querySelectorAll('.item-jogo').forEach(el => el.remove());
+    // Faz a troca de telas sem travar em loop
     document.getElementById('tela-jogo').classList.add('escondido');
     document.getElementById('tela-final').classList.remove('escondido');
+}
+
+// --- 4. FUNÇÃO PARA COPIAR GMAIL E SENHA COMTEMPORÂNEO ---
+function copiarDados() {
+    const textoParaCopiar = "Gmail: georaquel.2026 | Senha: 13022026Rg.";
+    
+    // Tenta usar a API moderna de copiar do navegador
+    navigator.clipboard.writeText(textoParaCopiar).then(() => {
+        const aviso = document.getElementById('aviso-copiado');
+        aviso.innerText = "Copiado com sucesso! ❤️ Copiado: georaquel.2026";
+        
+        // Faz brotar um monte de corações extras na hora do clique!
+        for(let i=0; i<15; i++) {
+            setTimeout(criarElementoFundo, i * 80);
+        }
+    }).catch(err => {
+        // Caso o celular bloqueie a API por privacidade, mostra na tela estruturado
+        alert("Dados para entrar:\n\nGmail: georaquel.2026\nSenha: 13022026Rg.");
+    });
 }

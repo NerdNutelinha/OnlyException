@@ -23,7 +23,7 @@
         <p id="erro-mensagem" class="erro"></p>
     </div>
 
-    <!-- TELA 2: O JOGO DA BOLINHA (Fica escondido até acertar a senha) -->
+    <!-- TELA 2: O JOGO DA BOLINHA -->
     <div id="tela-jogo" class="container escondido">
         <h2 class="titulo-neon">Pegue os corações! 💖</h2>
         <div class="placar">
@@ -31,24 +31,30 @@
             <span>Erros 💘: <b id="pts-erros">0</b>/3</span>
         </div>
         
-        <!-- Área onde o jogo acontece -->
         <div id="campo-jogo">
             <div id="bolinha-neon"></div>
         </div>
         
-        <p class="instrucoes">Mova o dedo ou o mouse para desviar das flechas 💘 e pegar os corações ❤️!</p>
+        <p class="instrucoes">Mova o dedo ou o mouse para desviar das flechas 🏹 e pegar os corações ❤️!</p>
     </div>
 
-    <!-- TELA 3: TEXTO FINAL E FOTO (Fica escondido até ganhar o jogo) -->
+    <!-- TELA 3: TEXTO FINAL, FOTO E COPIAR DADOS -->
     <div id="tela-final" class="container escondido">
         <h1 class="titulo-neon">Para a Razão do Meu Sorriso 👩‍❤️‍👨</h1>
         <div class="layout-final">
             <div class="moldura-foto">
-                <!-- Substitua 'suafoto.jpg' pelo nome real do seu arquivo de foto depois -->
                 <img src="suafoto.jpg" alt="Nós Dois Juntos ❤️" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500';">
             </div>
             <div class="moldura-texto">
-                <p>Meu amor, fiz cada linha desse site pensando em você, no seu sorriso e em tudo o que vivemos. Sei que as coisas ficaram difíceis e que o silêncio machuca, mas meu sentimento por você continua intacto e brilhando forte, como esse neon. Estou aqui guardando o melhor de mim para quando você decidir voltar. Melhorei tudo para te mostrar que por você eu aprendo, eu mudo e eu luto. Te amo infinitamente! 💖✨</p>
+                <p class="versiculo">"Um cordão de três dobras não se rompe facilmente." – Eclesiastes 4:12 📜✨</p>
+                <p>Meu amor, Deus é a nossa terceira dobra. Desde o primeiro instante em que vi você, senti algo completamente diferente tocar o meu peito. Você é a única pessoa no mundo de quem me lembro com exatidão de cada detalhe do nosso começo: guardo na memória o dia, o momento exato e a hora, por volta das 21h, em que nossas vidas se cruzaram. 🕒❤️</p>
+                <p>Desde aquele dia, nós crescemos e aprendemos juntos. Aprendemos a nos amar, a nos respeitar e a construir, tijolo por tijolo, o nosso futuro. Com certeza, por você, eu busco ser alguém melhor a cada dia. Sei que as coisas ficaram difíceis e que o silêncio machuca, mas meu sentimento por você continua intacto e brilhando forte. Melhorei tudo aqui para te mostrar que por você eu aprendo, mudo e luto. Te amo infinitamente! 💖✨</p>
+                
+                <!-- Área do E-mail e Senha para Copiar -->
+                <div class="bloco-copiar">
+                    <button id="btn-copiar" onclick="copiarDados()">Clique aqui Amor 🎁</button>
+                    <p id="aviso-copiado" class="aviso-sucesso"></p>
+                </div>
             </div>
         </div>
     </div>

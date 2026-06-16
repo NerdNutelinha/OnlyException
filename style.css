@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: #1a0011; /* Fundo roxo/rosa bem escuro para o neon destacar */
+    background-color: #1a0011; 
     color: #fff;
     font-family: 'Comic Sans MS', 'Arial', sans-serif;
     min-height: 100vh;
@@ -22,7 +22,7 @@ body {
     padding: 25px;
     width: 90%;
     max-width: 450px;
-    background: rgba(255, 20, 147, 0.1); /* Fundo rosa bem transparente */
+    background: rgba(255, 20, 147, 0.1); 
     border: 2px solid #ff1493;
     border-radius: 20px;
     box-shadow: 0 0 20px #ff1493, inset 0 0 10px #ff1493;
@@ -34,7 +34,6 @@ body {
     display: none !important;
 }
 
-/* Títulos com efeito Neon Rosa */
 .titulo-neon {
     font-size: 1.8rem;
     color: #fff;
@@ -48,7 +47,6 @@ body {
     margin-bottom: 25px;
 }
 
-/* Inputs e Botões Fofos */
 .input-grupo {
     display: flex;
     flex-direction: column;
@@ -95,7 +93,6 @@ button:hover {
     margin-top: 15px;
     font-size: 1rem;
     font-weight: bold;
-    text-shadow: 0 0 5px #000;
 }
 
 /* --- ANIMAÇÃO DOS ELEMENTOS SUBINDO --- */
@@ -144,7 +141,7 @@ button:hover {
     border-radius: 15px;
     position: relative;
     overflow: hidden;
-    cursor: none; /* Esconde a seta do mouse dentro do jogo */
+    cursor: none; 
 }
 
 #bolinha-neon {
@@ -165,6 +162,12 @@ button:hover {
     user-select: none;
 }
 
+.instrucoes {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #ffb3d9;
+}
+
 /* --- ESTILOS DA TELA FINAL --- */
 .layout-final {
     display: flex;
@@ -176,7 +179,7 @@ button:hover {
 .moldura-foto, .moldura-texto {
     border: 3px solid #ff1493;
     box-shadow: 0 0 15px #ff1493;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     padding: 15px;
     border-radius: 15px;
 }
@@ -189,13 +192,35 @@ button:hover {
 }
 
 .moldura-texto p {
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 0.95rem;
+    line-height: 1.6;
     color: #fff;
     text-align: justify;
+    margin-bottom: 12px;
 }
 
-/* Responsividade para Telas Maiores (PC) */
+.versiculo {
+    font-style: italic;
+    color: #ff69b4;
+    text-shadow: 0 0 5px rgba(255, 20, 147, 0.5);
+    text-align: center !important;
+    font-weight: bold;
+}
+
+/* Área do Botão Copiar */
+.bloco-copiar {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.aviso-sucesso {
+    color: #00ffcc;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    text-shadow: 0 0 8px #00ffcc;
+}
+
 @media (min-width: 768px) {
     #tela-final {
         max-width: 800px;
@@ -203,8 +228,12 @@ button:hover {
     .layout-final {
         flex-direction: row;
         justify-content: space-between;
+        align-items: flex-start;
     }
-    .moldura-foto, .moldura-texto {
-        width: 48%;
+    .moldura-foto {
+        width: 35%;
+    }
+    .moldura-texto {
+        width: 62%;
     }
 }

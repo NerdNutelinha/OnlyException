@@ -3,28 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Minha Vida</title>
+    <title>Para Meu Amorzinho 💕</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="tela-login" class="container">
-        <div class="cruz-container">
-            <div class="cruz-vertical"></div>
-            <div class="cruz-horizontal"></div>
-        </div>
+    <!-- CANVASES PARA EFEITOS VISUAIS -->
+    <div id="fundo-animado"></div>
 
-        <h2>Digite a senha para entrar:</h2>
+    <!-- TELA 1: LOGIN -->
+    <div id="tela-login" class="container">
+        <h1 class="titulo-neon">Oiiee meu Amorzinho 🥰✨</h1>
+        <p class="subtitulo">Amo você! Digite a nossa senha para entrar de cabeça no meu coração... ❤️</p>
         
         <div class="input-grupo">
-            <input type="password" id="senha" placeholder="Sua senha aqui...">
-            <button onclick="verificarSenha()">Entrar</button>
+            <input type="password" id="senha" placeholder="Escreva aqui Raquel 💖">
+            <button onclick="verificarSenha()">Entrar no nosso mundo 💞</button>
         </div>
         <p id="erro-mensagem" class="erro"></p>
     </div>
 
-    <div id="fundo-coracoes"></div>
+    <!-- TELA 2: O JOGO DA BOLINHA (Fica escondido até acertar a senha) -->
+    <div id="tela-jogo" class="container escondido">
+        <h2 class="titulo-neon">Pegue os corações! 💖</h2>
+        <div class="placar">
+            <span>Corações ❤️: <b id="pts-coracoes">0</b>/7</span>
+            <span>Erros 💘: <b id="pts-erros">0</b>/3</span>
+        </div>
+        
+        <!-- Área onde o jogo acontece -->
+        <div id="campo-jogo">
+            <div id="bolinha-neon"></div>
+        </div>
+        
+        <p class="instrucoes">Mova o dedo ou o mouse para desviar das flechas 💘 e pegar os corações ❤️!</p>
+    </div>
 
-    <script href="script.js"></script>
+    <!-- TELA 3: TEXTO FINAL E FOTO (Fica escondido até ganhar o jogo) -->
+    <div id="tela-final" class="container escondido">
+        <h1 class="titulo-neon">Para a Razão do Meu Sorriso 👩‍❤️‍👨</h1>
+        <div class="layout-final">
+            <div class="moldura-foto">
+                <!-- Substitua 'suafoto.jpg' pelo nome real do seu arquivo de foto depois -->
+                <img src="suafoto.jpg" alt="Nós Dois Juntos ❤️" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500';">
+            </div>
+            <div class="moldura-texto">
+                <p>Meu amor, fiz cada linha desse site pensando em você, no seu sorriso e em tudo o que vivemos. Sei que as coisas ficaram difíceis e que o silêncio machuca, mas meu sentimento por você continua intacto e brilhando forte, como esse neon. Estou aqui guardando o melhor de mim para quando você decidir voltar. Melhorei tudo para te mostrar que por você eu aprendo, eu mudo e eu luto. Te amo infinitamente! 💖✨</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

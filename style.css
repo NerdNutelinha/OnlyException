@@ -12,11 +12,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* CORREÇÃO: Mudado de hidden para auto para permitir rolagem no celular quando a tela final abrir */
     overflow-x: hidden;
-    overflow-y: auto; 
+    overflow-y: auto; /* Permite rolar a página no celular de forma natural */
     position: relative;
-    padding: 20px 0; /* Dá um espacinho nas bordas superior/inferior no celular */
+    padding: 20px 0;
 }
 
 .container {
@@ -30,16 +29,18 @@ body {
     border-radius: 20px;
     box-shadow: 0 0 20px #ff1493, inset 0 0 10px #ff1493;
     backdrop-filter: blur(5px);
-    transition: all 0.5s ease;
-    /* CORREÇÃO: Garante que se o conteúdo crescer, o container cresça junto e não corte */
-    max-height: 90vh;
-    overflow-y: auto;
+    transition: all 0.3s ease;
 }
 
-/* Modificação específica para a tela final expandir o tamanho no mobile */
+/* FORÇA O SUCESSO DA TRANSIÇÃO LINEAR (NÃO MOSTRA TUDO JUNTO) */
+.escondido {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
 #tela-final {
-    max-height: none !important; /* Permite que a tela final cresça o quanto precisar */
-    overflow-y: visible !important;
+    max-width: 450px; /* Mantém o padrão fofo no mobile */
 }
 
 .titulo-neon {
@@ -149,7 +150,6 @@ button:hover {
     border-radius: 15px;
     position: relative;
     overflow: hidden;
-    cursor: none; 
 }
 
 #bolinha-neon {
@@ -190,6 +190,7 @@ button:hover {
     background: rgba(0, 0, 0, 0.7);
     padding: 15px;
     border-radius: 15px;
+    width: 100%;
 }
 
 .moldura-foto img {
@@ -197,6 +198,7 @@ button:hover {
     max-width: 250px;
     border-radius: 10px;
     display: block;
+    margin: 0 auto;
 }
 
 .moldura-texto p {
@@ -215,7 +217,6 @@ button:hover {
     font-weight: bold;
 }
 
-/* Área do Botão Copiar */
 .bloco-copiar {
     margin-top: 20px;
     text-align: center;
@@ -229,6 +230,7 @@ button:hover {
     text-shadow: 0 0 8px #00ffcc;
 }
 
+/* Ajustes de responsividade para telas maiores (computador) */
 @media (min-width: 768px) {
     #tela-final {
         max-width: 800px;

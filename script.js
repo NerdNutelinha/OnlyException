@@ -170,12 +170,12 @@ function ganharJogo() {
 
 // --- 4. FUNÇÃO PARA COPIAR GMAIL E SENHA COMTEMPORÂNEO ---
 function copiarDados() {
-    const textoParaCopiar = "Gmail: georaquel.2026 | Senha: 13022026Rg.";
+    const textoParaCopiar = "Gmail: georaquel.2026@gmail.com | Senha: 13022026Rg.";
     
     // Tenta usar a API moderna de copiar do navegador
     navigator.clipboard.writeText(textoParaCopiar).then(() => {
         const aviso = document.getElementById('aviso-copiado');
-        aviso.innerText = "Copiado com sucesso! ❤️ Copiado: georaquel.2026";
+        aviso.innerText = "Copiado com sucesso! ❤️ Copiado: georaquel.2026@gmail.com";
         
         // Faz brotar um monte de corações extras na hora do clique!
         for(let i=0; i<15; i++) {
@@ -183,6 +183,6 @@ function copiarDados() {
         }
     }).catch(err => {
         // Caso o celular bloqueie a API por privacidade, mostra na tela estruturado
-        alert("Dados para entrar:\n\nGmail: georaquel.2026\nSenha: 13022026Rg.");
+        alert("Dados para entrar:\n\nGmail: georaquel.2026@gmail.com\nSenha: 13022026Rg.");
     });
 }

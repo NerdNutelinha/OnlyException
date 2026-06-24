@@ -12,8 +12,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    /* CORREÇÃO: Mudado de hidden para auto para permitir rolagem no celular quando a tela final abrir */
+    overflow-x: hidden;
+    overflow-y: auto; 
     position: relative;
+    padding: 20px 0; /* Dá um espacinho nas bordas superior/inferior no celular */
 }
 
 .container {
@@ -28,10 +31,15 @@ body {
     box-shadow: 0 0 20px #ff1493, inset 0 0 10px #ff1493;
     backdrop-filter: blur(5px);
     transition: all 0.5s ease;
+    /* CORREÇÃO: Garante que se o conteúdo crescer, o container cresça junto e não corte */
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
-.escondido {
-    display: none !important;
+/* Modificação específica para a tela final expandir o tamanho no mobile */
+#tela-final {
+    max-height: none !important; /* Permite que a tela final cresça o quanto precisar */
+    overflow-y: visible !important;
 }
 
 .titulo-neon {
